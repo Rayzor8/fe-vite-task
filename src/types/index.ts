@@ -15,9 +15,14 @@ export interface TaskState {
   filter: "all" | "completed" | "pending";
 }
 
-export type TaskAction = {
-  type: "ADD_TASK";
-  payload: Omit<Task, "id" | "createdAt" | "updatedAt">;
-};
+export type TaskAction =
+  | {
+      type: "ADD_TASK";
+      payload: Omit<Task, "id" | "createdAt" | "updatedAt">;
+    }
+  | {
+      type: "SET_FILTER";
+      payload: TaskState["filter"];
+    };
 
 export type TaskFormValues = z.infer<typeof taskFormSchema>;

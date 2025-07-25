@@ -1,13 +1,29 @@
 import type React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { useTask } from "@/hooks/use-tasks";
+import { CheckSquare } from "lucide-react";
+import useTasks from "@/hooks/use-tasks";
 
 const TaskList: React.FC = () => {
-  const { state } = useTask();
+  const { state } = useTasks();
+
+  const getFilterTitle = () => {
+    switch (state.filter) {
+      case "all":
+        return "All Tasks";
+      case "completed":
+        return "Completed Tasks";
+      case "pending":
+        return "Uncompleted Tasks";
+    }
+  };
+
   return (
-    <Card>
+    <Card >
       <CardHeader>
-        <CardTitle>Task List</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <CheckSquare className="w-5 h-5" />
+          {getFilterTitle()} ({state.tasks.length})
+        </CardTitle>
       </CardHeader>
 
       <CardContent className="space-y-3">

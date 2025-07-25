@@ -23,10 +23,11 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Button } from "../ui/button";
-import { useTask } from "@/hooks/use-tasks";
+import useTasks from "@/hooks/use-tasks";
+
 
 const TaskForm: React.FC = () => {
-  const { addTask } = useTask();
+  const { addTask } = useTasks();
 
   const form = useForm<TaskFormValues>({
     resolver: zodResolver(taskFormSchema),
