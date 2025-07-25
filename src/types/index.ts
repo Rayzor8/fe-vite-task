@@ -1,3 +1,5 @@
+import { taskFormSchema } from "@/schemas/task-form-schema";
+import { z } from "zod";
 export interface Task {
   id: string;
   title: string;
@@ -5,7 +7,7 @@ export interface Task {
   completed: boolean;
   priority: "low" | "medium" | "high";
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
 }
 
 export interface TaskState {
@@ -17,3 +19,5 @@ export type TaskAction = {
   type: "ADD_TASK";
   payload: Omit<Task, "id" | "createdAt" | "updatedAt">;
 };
+
+export type TaskFormValues = z.infer<typeof taskFormSchema>;

@@ -9,7 +9,6 @@ export const createTask = (
     ...taskData,
     id: generateId(),
     createdAt: now,
-    updatedAt: now,
   };
 };
 
