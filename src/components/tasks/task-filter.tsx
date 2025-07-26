@@ -7,8 +7,8 @@ import { Badge } from "../ui/badge";
 import type { TaskState } from "@/types";
 
 const TaskFilter: React.FC = () => {
-  const { state, taskStats, setFilter } = useTasks();
-  console.log(state);
+  const { state, taskStats, dispatch } = useTasks();
+
   const filterOptions = [
     { value: "all", label: "All", count: taskStats.total },
     { value: "completed", label: "Completed", count: taskStats.completed },
@@ -19,6 +19,10 @@ const TaskFilter: React.FC = () => {
     { label: "Total Tasks", value: taskStats.total },
     { label: "Completion Rate", value: taskStats.completedPercentage + "%" },
   ];
+
+  const setFilter = (filter: TaskState["filter"]) => {
+    dispatch({ type: "SET_FILTER", payload: filter });
+  };
 
   return (
     <Card>

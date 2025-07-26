@@ -1,21 +1,16 @@
 import { useTaskContext } from "@/context/task-context";
-import type { Task, TaskState } from "@/types";
+import type { Task } from "@/types";
 
 export const useTasks = () => {
   const { state, dispatch } = useTaskContext();
 
-  const addTask = (taskData: Omit<Task, "id" | "createdAt" | "updatedAt">) => {
-    dispatch({ type: "ADD_TASK", payload: taskData });
-  };
-
-  const setFilter = (filter: TaskState["filter"]) => {
-    dispatch({ type: "SET_FILTER", payload: filter });
-  };
-
   // Computed values
   const taskStats = getTaskStats(state.tasks);
+  const filteredTasks = filterTasks(state.tasks, state.filter);
+  const newState = { ...state, tasks: filteredTasks };
+  console.log(filteredTasks);
 
-  return { state, addTask, taskStats, setFilter };
+  return { state: newState, dispatch, taskStats };
 };
 
 function getTaskStats(tasks: Task[]) {
@@ -26,6 +21,20 @@ function getTaskStats(tasks: Task[]) {
     total > 0 ? Math.round((completed / total) * 100) : 0;
 
   return { total, completed, pending, completedPercentage };
+}
+
+function filterTasks(
+  tasks: Task[],
+  filter: "all" | "completed" | "pending"
+): Task[] {
+  switch (filter) {
+    case "completed":
+      return tasks.filter((task) => task.completed);
+    case "pending":
+      return tasks.filter((task) => !task.completed);
+    default:
+      return tasks;
+  }
 }
 
 export default useTasks;

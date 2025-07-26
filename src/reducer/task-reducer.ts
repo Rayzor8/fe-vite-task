@@ -23,12 +23,27 @@ export const taskReducer = (
         tasks: [...state.tasks, createTask(action.payload)],
       };
 
-
     case "SET_FILTER":
       return {
         ...state,
         filter: action.payload,
       };
+
+    case "TOGGLE_COMPLETE":
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === action.payload) {
+            return {
+              ...task,
+              completed: !task.completed,
+              updatedAt: new Date(),
+            };
+          }
+          return task;
+        }),
+      };
+
 
     default:
       return state;

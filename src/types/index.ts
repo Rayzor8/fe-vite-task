@@ -23,6 +23,13 @@ export type TaskAction =
   | {
       type: "SET_FILTER";
       payload: TaskState["filter"];
-    };
+    }
+  | {
+      type: "TOGGLE_COMPLETE";
+      payload: string;
+    }
+   
+ 
+
 
 export type TaskFormValues = z.infer<typeof taskFormSchema>;

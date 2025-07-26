@@ -2,9 +2,10 @@ import type React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { CheckSquare } from "lucide-react";
 import useTasks from "@/hooks/use-tasks";
+import { Button } from "../ui/button";
 
 const TaskList: React.FC = () => {
-  const { state } = useTasks();
+  const { state, dispatch } = useTasks();
 
   const getFilterTitle = () => {
     switch (state.filter) {
@@ -13,12 +14,16 @@ const TaskList: React.FC = () => {
       case "completed":
         return "Completed Tasks";
       case "pending":
-        return "Uncompleted Tasks";
+        return "Pending Tasks";
     }
   };
 
+  const handleToggleCompleted = (taskId: string) => {
+    dispatch({ type: "TOGGLE_COMPLETE", payload: taskId });
+  };
+
   return (
-    <Card >
+    <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <CheckSquare className="w-5 h-5" />
@@ -32,9 +37,12 @@ const TaskList: React.FC = () => {
             <p>{task.title}</p>
             <p>{task.description}</p>
             <p>{task.priority}</p>
-            <p>{task.completed}</p>
+            <p>{task.completed ? "Completed" : "Pending"}</p>
             <p>{task.createdAt.toDateString()}</p>
             <p>{task.updatedAt?.toDateString() || "-"}</p>
+            <Button onClick={() => handleToggleCompleted(task.id)}>
+              Set as {task.completed ? "Pending" : "Completed"}
+            </Button>
           </div>
         ))}
       </CardContent>

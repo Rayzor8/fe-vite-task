@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Plus } from "lucide-react";
 import { useForm } from "react-hook-form";
-import type { TaskFormValues } from "@/types";
+import type { Task, TaskFormValues } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { taskFormSchema } from "@/schemas/task-form-schema";
 import {
@@ -25,9 +25,12 @@ import {
 import { Button } from "../ui/button";
 import useTasks from "@/hooks/use-tasks";
 
-
 const TaskForm: React.FC = () => {
-  const { addTask } = useTasks();
+  const { dispatch } = useTasks();
+
+  const addTask = (taskData: Omit<Task, "id" | "createdAt" | "updatedAt">) => {
+    dispatch({ type: "ADD_TASK", payload: taskData });
+  };
 
   const form = useForm<TaskFormValues>({
     resolver: zodResolver(taskFormSchema),
