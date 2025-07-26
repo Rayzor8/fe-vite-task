@@ -24,6 +24,10 @@ const TaskFilter: React.FC = () => {
     dispatch({ type: "SET_FILTER", payload: filter });
   };
 
+  const handleDeleteCompletedTasks = () => {
+    dispatch({ type: "DELETE_COMPLETED_TASKS" });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -63,8 +67,13 @@ const TaskFilter: React.FC = () => {
           ))}
         </div>
 
-        {taskStats.completed === 0 && (
-          <Button variant="destructive" size="sm" className="w-full">
+        {taskStats.completed > 0 && (
+          <Button
+            variant="destructive"
+            size="sm"
+            className="w-full"
+            onClick={handleDeleteCompletedTasks}
+          >
             <Trash2 className="w-4 h-4" />
             Clear All Completed tasks ({taskStats.completed})
           </Button>

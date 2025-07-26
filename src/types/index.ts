@@ -28,8 +28,12 @@ export type TaskAction =
       type: "TOGGLE_COMPLETE";
       payload: string;
     }
-   
- 
-
+  | {
+      type: "DELETE_TASK";
+      payload: string;
+    }
+  | {
+      type: "DELETE_COMPLETED_TASKS";
+    };
 
 export type TaskFormValues = z.infer<typeof taskFormSchema>;

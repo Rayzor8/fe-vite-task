@@ -7,8 +7,9 @@ export const useTasks = () => {
   // Computed values
   const taskStats = getTaskStats(state.tasks);
   const filteredTasks = filterTasks(state.tasks, state.filter);
-  const newState = { ...state, tasks: filteredTasks };
-  console.log(filteredTasks);
+  const sortedTasks = sortTasksByPriority(filteredTasks);
+  const newState = { ...state, tasks: sortedTasks };
+
 
   return { state: newState, dispatch, taskStats };
 };
@@ -36,5 +37,12 @@ function filterTasks(
       return tasks;
   }
 }
+
+const sortTasksByPriority = (tasks: Task[]): Task[] => {
+  const priorityOrder = { high: 3, medium: 2, low: 1 };
+  return [...tasks].sort(
+    (a, b) => priorityOrder[b.priority] - priorityOrder[a.priority]
+  );
+};
 
 export default useTasks;

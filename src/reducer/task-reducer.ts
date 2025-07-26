@@ -44,6 +44,17 @@ export const taskReducer = (
         }),
       };
 
+    case "DELETE_TASK":
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => task.id !== action.payload),
+      };
+
+    case "DELETE_COMPLETED_TASKS":
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => !task.completed),
+      };
 
     default:
       return state;

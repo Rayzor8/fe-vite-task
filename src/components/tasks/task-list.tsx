@@ -2,10 +2,10 @@ import type React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { CheckSquare } from "lucide-react";
 import useTasks from "@/hooks/use-tasks";
-import { Button } from "../ui/button";
+import TaskItem from "./task-item";
 
 const TaskList: React.FC = () => {
-  const { state, dispatch } = useTasks();
+  const { state } = useTasks();
 
   const getFilterTitle = () => {
     switch (state.filter) {
@@ -18,10 +18,6 @@ const TaskList: React.FC = () => {
     }
   };
 
-  const handleToggleCompleted = (taskId: string) => {
-    dispatch({ type: "TOGGLE_COMPLETE", payload: taskId });
-  };
-
   return (
     <Card>
       <CardHeader>
@@ -32,19 +28,18 @@ const TaskList: React.FC = () => {
       </CardHeader>
 
       <CardContent className="space-y-3">
-        {state.tasks.map((task) => (
-          <div key={task.id} className="bg-amber-300 p-2">
-            <p>{task.title}</p>
-            <p>{task.description}</p>
-            <p>{task.priority}</p>
-            <p>{task.completed ? "Completed" : "Pending"}</p>
-            <p>{task.createdAt.toDateString()}</p>
-            <p>{task.updatedAt?.toDateString() || "-"}</p>
-            <Button onClick={() => handleToggleCompleted(task.id)}>
-              Set as {task.completed ? "Pending" : "Completed"}
-            </Button>
+        {state.tasks.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            <CheckSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
+            <p>
+              {state.filter === "completed" && "Completed tasks is not found"}
+              {state.filter === "pending" && "Pending tasks is not found"}
+              {state.filter === "all" && "No tasks found, please add a task"}
+            </p>
           </div>
-        ))}
+        ) : (
+          state.tasks.map((task) => <TaskItem key={task.id} task={task} />)
+        )}
       </CardContent>
     </Card>
   );
