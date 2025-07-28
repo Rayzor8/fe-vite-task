@@ -38,7 +38,7 @@ const TaskFilter: React.FC = () => {
       </CardHeader>
 
       <CardContent className="space-y-5 px-5">
-        <div className="flex flex-wrap gap-1">
+        <div className="grid grid-cols-2 gap-3">
           {filterOptions.map((option) => (
             <Button
               key={option.value}
