@@ -34,6 +34,12 @@ export type TaskAction =
     }
   | {
       type: "DELETE_COMPLETED_TASKS";
+    }
+  | {
+      type: "UPDATE_TASK";
+      payload: {
+        updates: Task;
+      };
     };
 
 export type TaskFormValues = z.infer<typeof taskFormSchema>;

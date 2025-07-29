@@ -56,6 +56,21 @@ export const taskReducer = (
         tasks: state.tasks.filter((task) => !task.completed),
       };
 
+    case "UPDATE_TASK":
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === action.payload.updates.id) {
+            return {
+              ...task,
+              ...action.payload.updates,
+              updatedAt: new Date(),
+            };
+          }
+          return task;
+        }),
+      };
+
     default:
       return state;
   }

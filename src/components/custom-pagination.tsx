@@ -70,6 +70,9 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
     totalPages,
     maxPagesToShow
   );
+
+  if(!totalItems) return
+  
   return (
     <div className="flex justify-between w-full">
       <Select
